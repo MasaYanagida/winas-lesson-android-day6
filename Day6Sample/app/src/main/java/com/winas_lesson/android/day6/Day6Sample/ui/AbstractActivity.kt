@@ -6,7 +6,13 @@ import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.winas_lesson.android.day6.Day6Sample.App
+import com.winas_lesson.android.day6.Day6Sample.helper.ContactManager
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.OnShowRationale
+import permissions.dispatcher.PermissionRequest
+import permissions.dispatcher.RuntimePermissions
 
+@RuntimePermissions
 abstract class AbstractActivity : AppCompatActivity() {
     val isTop: Boolean
         get() {
@@ -43,6 +49,23 @@ abstract class AbstractActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // TODO
+        onRequestPermissionsResult(requestCode, grantResults)
+    }
+
+    // 許可必要な呼び出し関数
+    @NeedsPermission(Manifest.permission.READ_CONTACTS)
+    open fun getContacts() {
+        ContactManager.shared.fetch(this)
+    }
+
+    // Rationaleを見せるところ
+    @OnShowRationale(Manifest.permission.READ_CONTACTS)
+    open fun showRationaleForContacts(request: PermissionRequest) {
+        AlertDialog.Builder(this)
+            .setPositiveButton("OK") { _, _ -> request.proceed() }
+            .setNegativeButton("NO") { _, _ -> request.cancel() }
+            .setCancelable(false)
+            .setMessage("連絡先へのアクセスを許可してください。")
+            .show()
     }
 }

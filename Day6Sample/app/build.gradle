@@ -14,6 +14,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -28,6 +29,9 @@ android {
     viewBinding {
         enabled = true
     }
+//    buildFeatures {
+//        viewBinding true
+//    }
 }
 
 dependencies {
@@ -56,10 +60,14 @@ dependencies {
     implementation "com.squareup.moshi:moshi-adapters:1.11.0"
 
     // permission
-    implementation "com.github.permissions-dispatcher:permissionsdispatcher:4.8.0"
-    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:4.8.0"
+//    implementation "com.github.permissions-dispatcher:permissionsdispatcher:4.8.0"
+//    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:4.8.0"
+//    dependencies {
+        implementation "com.github.permissions-dispatcher:permissionsdispatcher:4.8.0"
+        kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:4.8.0"
+//    }
 
-    // image view - glide
+    // image view - glide //
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
